@@ -1,8 +1,15 @@
 # #################################################
-# Taking arguments from the command line
+# Cp.14 Exercise 1
 # #################################################
 
 @students = []
+
+def student_array(name, cohort, hobby, date_of_birth)
+   @students << {name: name , cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
+   @students
+end
+
+# #################################################
 
 def try_load_students
   filename = ARGV.first 
@@ -16,13 +23,11 @@ def try_load_students
   end
 end
 
-# #################################################
-
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, date_of_birth = line.chomp.split(",")
-    @students << {name: name , cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
+    student_array(name, cohort, hobby, date_of_birth)
   end
   file.close
 end
