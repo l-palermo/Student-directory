@@ -1,8 +1,8 @@
 # #################################################
-# Cp. 8 - Exercise 10
+# Cp. 8 - Exercise 11
 # #################################################
 
-# See typos file
+# See typos.rb file
 
 # Array with list of months to check if the user input has a typo
 COHORTS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", :unknown]
