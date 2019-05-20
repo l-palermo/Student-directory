@@ -1,37 +1,44 @@
 # #################################################
-# Cp. 8 - Exercise 11
+# Cp. 8 - Exercise 12
 # #################################################
 
-# See typos.rb file
+# Added conditional for empty array
 
 # Array with list of months to check if the user input has a typo
 COHORTS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", :unknown]
 
 def students_count(students)
-  if students.length <= 1
+  if students.empty?
+  elsif students.length <= 1
     puts "Now we have #{students.count} student"
   else
     puts "Now we have #{students.count} students"
   end
 end
 
-def print_header
-  puts "The students of Villains Academy".center(107, "-")
-  puts "--------------------------------".center(107, "-")
+def print_header(names)
+  if names.empty?
+  else
+    puts "The students of Villains Academy".center(107, "-")
+    puts "--------------------------------".center(107, "-")
+  end
 end
 
 def print(names)
-  student_name = ""
-  while student_name != names.last[:name] do
-    names.each_with_index do |student, index| 
-      puts "#{index + 1}.#{student[:name]}".ljust(30) + " Cohort: #{student[:cohort]}".ljust(25) + " Hobby: #{student[:hobby]}".ljust(20) + " Date_of_birth: #{student[:date_of_birth]}" 
-      student_name = student[:name]
+  if names.empty?
+  else
+    student_name = ""
+    while student_name != names.last[:name] do
+      names.each_with_index do |student, index| 
+        puts "#{index + 1}.#{student[:name]}".ljust(30) + " Cohort: #{student[:cohort]}".ljust(25) + " Hobby: #{student[:hobby]}".ljust(20) + " Date_of_birth: #{student[:date_of_birth]}" 
+        student_name = student[:name]
+      end
     end
   end
 end
 
-def print_footer(names)
-students_count(names)
+def print_footer(students)
+students_count(students)
 end
 
 def input_students
@@ -69,6 +76,6 @@ end
 
 # nothing happens untill we call the methods
 students = input_students
-print_header
+print_header(students)
 print(students)
 print_footer(students)
