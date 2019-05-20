@@ -1,5 +1,37 @@
 # #################################################
-# Cp. 8 - Exercise 7
+# Cp. 8 - Exercise 8
+# #################################################
+
+def students_by_cohort(students)
+ cohorts = {}
+  students.map do |student| 
+    if cohorts[student[:cohort]] == nil
+      cohorts[student[:cohort]] = []
+    end
+    cohorts[student[:cohort]] << student[:name]
+  end
+    cohorts
+end
+
+# This sorted hash will be used to print the students belonging to a specific cohort only 
+# by user_input, it will also recognize if the cohort entered by the user exist or not.
+
+
+def print_students_cohort(students)
+    sbc = students_by_cohort(students)
+    puts "Enter the cohort to see its students "
+    cohort = gets.chomp.to_sym
+    while !cohort.empty? do
+      if sbc.key(sbc[cohort]) == cohort 
+        puts "Students from #{cohort}: #{sbc[cohort.to_sym]}"
+      else
+        puts "The cohort you entered does not exist, please try again"
+      end
+    puts "Enter the cohort"
+    cohort = gets.chomp.to_sym
+    end
+end
+
 # #################################################
 
 # Array with list of months to check if the user input has a typo
@@ -19,8 +51,6 @@ def print(names)
     end
   end
 end
-
-# #################################################
 
 def print_footer(names)
 puts "Overall, we have #{names.count} great students"
@@ -59,10 +89,9 @@ def input_students
   students
 end 
 
-# #################################################
-
 # nothing happens untill we call the methods
 students = input_students
 print_header
 print(students)
 print_footer(students)
+print_students_cohort(students)
