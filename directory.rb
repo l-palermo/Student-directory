@@ -1,13 +1,14 @@
 # #################################################
-# Cp. 8 - Exercise 6
+# Cp. 8 - Exercise 7
 # #################################################
+
+# Array with list of months to check if the user input has a typo
+COHORTS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", :unknown]
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "--------------------------------"
+  puts "The students of Villains Academy".center(107, "-")
+  puts "--------------------------------".center(107, "-")
 end
-
-# #################################################
 
 def print(names)
   student_name = ""
@@ -39,8 +40,17 @@ def input_students
     hobby = gets.chomp
     puts "Enter the date of birth"
     date_of_birth = gets.chomp
+    puts "Enter the cohort"
+    cohort = gets.chomp
+    if cohort.empty?
+      cohort = :unknown
+    end
+    while !COHORTS.include?(cohort)
+      puts "You made a typo, please type again"
+      cohort = gets.chomp
+    end
     # add the student hash to the array
-    students << {name: name, cohort: :november, hobby: hobby, date_of_birth: date_of_birth}
+    students << {name: name, cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
     puts "Now we have #{students.count} students"
     # get another name from the user
     name = gets.chomp
@@ -48,6 +58,8 @@ def input_students
   # returns the array of students
   students
 end 
+
+# #################################################
 
 # nothing happens untill we call the methods
 students = input_students
