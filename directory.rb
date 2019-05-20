@@ -1,5 +1,5 @@
 # #################################################
-# Cp. 8 - Exercise 3
+# Cp. 8 - Exercise 4
 # #################################################
 
 def print_header
@@ -9,11 +9,14 @@ end
 
 # #################################################
 
-def print_student_name_shorter_than(names, integer)
-  names.each_with_index do |student, index| 
-    puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length <= integer
+def print(names)
+  student_name = ""
+  while student_name != names.last[:name] do
+    names.each_with_index do |student, index| 
+      puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)" 
+      student_name = student[:name]
+    end
   end
-  puts "Students whose name is shorter than #{integer}"
 end
 
 # #################################################
@@ -44,5 +47,5 @@ end
 # nothing happens untill we call the methods
 students = input_students
 print_header
-print_student_name_shorter_than(students, 12)
+print(students)
 print_footer(students)
