@@ -1,29 +1,42 @@
 # #################################################
-# interactive menu
+# Refactoring
 # #################################################
 
-def interactive_menu
-  students = []
-  loop do
-    # 1. print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit" 
-    # 2. read the input and save it into a variable
-    selection = gets.chomp
-    # 3. do what the user has asked
-    case selection
+@students = []
+
+def print_menu
+  puts "\n1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_student_list
+  print_footer
+end
+
+def process(selection)
+  case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
-      print_header(students)
-      print(students)
-      print_footer(students)
+      show_students
     when "9"
       exit # this will cause the program to terminate
     else
       puts "I don't know what you meant, try again"
     end
+end
+
+def interactive_menu
+  loop do
+    # 1. print the menu and ask the user what to do
+    print_menu 
+    # 2. read the input and save it into a variable
+    selection = gets.chomp
+    # 3. do what the user has asked
+    process(selection)
   end
 end
 
@@ -32,29 +45,29 @@ end
 # Array with list of months to check if the user input has a typo
 COHORTS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", :unknown]
 
-def students_count(students)
-  if students.empty?
-  elsif students.length <= 1
-    puts "Now we have #{students.count} student"
+def students_count
+  if @students.empty?
+  elsif @students.length <= 1
+    puts "Now we have #{@students.count} student"
   else
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{@students.count} students"
   end
 end
 
-def print_header(names)
-  if names.empty?
+def print_header
+  if @students.empty?
   else
     puts "The students of Villains Academy".center(107, "-")
     puts "--------------------------------".center(107, "-")
   end
 end
 
-def print(names)
-  if names.empty?
+def print_student_list
+  if @students.empty?
   else
     student_name = ""
-    while student_name != names.last[:name] do
-      names.each_with_index do |student, index| 
+    while student_name != @students.last[:name] do
+      @students.each_with_index do |student, index| 
         puts "#{index + 1}.#{student[:name]}".ljust(30) + " Cohort: #{student[:cohort]}".ljust(25) + " Hobby: #{student[:hobby]}".ljust(20) + " Date_of_birth: #{student[:date_of_birth]}" 
         student_name = student[:name]
       end
@@ -62,15 +75,13 @@ def print(names)
   end
 end
 
-def print_footer(students)
-students_count(students)
+def print_footer
+students_count
 end
 
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # create an empty array
-  students = []
   # get the first name
   puts "Enter the name"
   name = gets.delete!("\n")
@@ -90,13 +101,11 @@ def input_students
       cohort = gets.delete!("\n")
     end
     # add the student hash to the array
-    students << {name: name, cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
-    students_count(students)
+    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
+    students_count
     # get another name from the user
     name = gets.delete!("\n")
   end
-  # returns the array of students
-  students
 end 
 
 # nothing happens untill we call the methods
