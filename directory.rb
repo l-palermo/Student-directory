@@ -1,5 +1,5 @@
 # #################################################
-# Cp. 8 - Exercise 1
+# Cp. 8 - Exercise 2
 # #################################################
 
 def print_header
@@ -7,11 +7,16 @@ def print_header
   puts "--------------------------------"
 end
 
-def print(names)
+# #################################################
+
+def print(names, letter)
   names.each_with_index do |student, index| 
-    puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)" 
+    puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0] == letter
   end
+  puts "Students whose name start with #{letter}"
 end
+
+# #################################################
 
 def print_footer(names)
 puts "Overall, we have #{names.count} great students"
@@ -39,5 +44,5 @@ end
 # nothing happens untill we call the methods
 students = input_students
 print_header
-print(students)
+print(students, "D")
 print_footer(students)
