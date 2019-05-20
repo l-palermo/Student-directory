@@ -1,6 +1,11 @@
 # #################################################
-# Cp. 8 - Exercise 9
+# Cp. 8 - Exercise 10
 # #################################################
+
+# See typos file
+
+# Array with list of months to check if the user input has a typo
+COHORTS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", :unknown]
 
 def students_count(students)
   if students.length <= 1
@@ -9,11 +14,6 @@ def students_count(students)
     puts "Now we have #{students.count} students"
   end
 end
-
-# #################################################
-
-# Array with list of months to check if the user input has a typo
-COHORTS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", :unknown]
 
 def print_header
   puts "The students of Villains Academy".center(107, "-")
@@ -41,27 +41,27 @@ def input_students
   students = []
   # get the first name
   puts "Enter the name"
-  name = gets.chomp
+  name = gets.delete!("\n")
   # while the name is not empty, repeate this code
   while !name.empty? do
     puts "Enter the hobby"
-    hobby = gets.chomp
+    hobby = gets.delete!("\n")
     puts "Enter the date of birth"
-    date_of_birth = gets.chomp
+    date_of_birth = gets.delete("\n")
     puts "Enter the cohort"
-    cohort = gets.chomp
+    cohort = gets.delete!("\n")
     if cohort.empty?
       cohort = :unknown
     end
     while !COHORTS.include?(cohort)
       puts "You made a typo, please type again"
-      cohort = gets.chomp
+      cohort = gets.delete!("\n")
     end
     # add the student hash to the array
     students << {name: name, cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
     students_count(students)
     # get another name from the user
-    name = gets.chomp
+    name = gets.delete!("\n")
   end
   # returns the array of students
   students
