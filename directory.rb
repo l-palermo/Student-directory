@@ -1,5 +1,5 @@
 # #################################################
-# Cp. 8 - Exercise 2
+# Cp. 8 - Exercise 3
 # #################################################
 
 def print_header
@@ -9,11 +9,11 @@ end
 
 # #################################################
 
-def print(names, letter)
+def print_student_name_shorter_than(names, integer)
   names.each_with_index do |student, index| 
-    puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0] == letter
+    puts "#{index + 1}.#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length <= integer
   end
-  puts "Students whose name start with #{letter}"
+  puts "Students whose name is shorter than #{integer}"
 end
 
 # #################################################
@@ -44,5 +44,5 @@ end
 # nothing happens untill we call the methods
 students = input_students
 print_header
-print(students, "D")
+print_student_name_shorter_than(students, 12)
 print_footer(students)
