@@ -1,19 +1,31 @@
 # #################################################
-# Loading the data from the file
+# Taking arguments from the command line
 # #################################################
 
 @students = []
 
-def load_students
-  file = File.open("students.cvs", "r")
+def try_load_students
+  filename = ARGV.first 
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+# #################################################
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, date_of_birth = line.chomp.split(",")
     @students << {name: name , cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
   end
   file.close
 end
-
-# #################################################
 
 def save_students
    file = File.open("students.cvs", "w")
@@ -61,7 +73,7 @@ def interactive_menu
     # 1. print the menu and ask the user what to do
     print_menu 
     # 2. read the input and save it into a variable
-    selection = gets.chomp
+    selection = STDIN.gets.chomp
     # 3. do what the user has asked
     process(selection)
   end
@@ -109,29 +121,30 @@ def input_students
   puts "To finish, just hit return twice"
   # get the first name
   puts "Enter the name"
-  name = gets.delete!("\n")
+  name = STDIN.gets.delete!("\n")
   # while the name is not empty, repeate this code
   while !name.empty? do
     puts "Enter the hobby"
-    hobby = gets.delete!("\n")
+    hobby = STDIN.gets.delete!("\n")
     puts "Enter the date of birth"
-    date_of_birth = gets.delete("\n")
+    date_of_birth = STDIN.gets.delete!("\n")
     puts "Enter the cohort"
-    cohort = gets.delete!("\n")
+    cohort = STDIN.gets.delete!("\n")
     if cohort.empty?
       cohort = :unknown
     end
     while !COHORTS.include?(cohort)
       puts "You made a typo, please type again"
-      cohort = gets.delete!("\n")
+      cohort = STDIN.gets.delete!("\n")
     end
     # add the student hash to the array
     @students << {name: name, cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
     students_count
     # get another name from the user
-    name = gets.delete!("\n")
+    name = STDIN.gets.delete!("\n")
   end
 end 
 
 # nothing happens untill we call the methods
+try_load_students
 interactive_menu
