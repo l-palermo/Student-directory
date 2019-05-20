@@ -1,5 +1,5 @@
 # #################################################
-# Cp. 8 - Exercise 5
+# Cp. 8 - Exercise 6
 # #################################################
 
 def print_header
@@ -13,11 +13,13 @@ def print(names)
   student_name = ""
   while student_name != names.last[:name] do
     names.each_with_index do |student, index| 
-      puts "#{index + 1}.#{student[:name]} Cohort: #{student[:cohort]} Hobby: #{student[:hobby]} Date_of_birth: #{student[:date_of_birth]}" 
+      puts "#{index + 1}.#{student[:name]}".ljust(30) + " Cohort: #{student[:cohort]}".ljust(25) + " Hobby: #{student[:hobby]}".ljust(20) + " Date_of_birth: #{student[:date_of_birth]}" 
       student_name = student[:name]
     end
   end
 end
+
+# #################################################
 
 def print_footer(names)
 puts "Overall, we have #{names.count} great students"
@@ -46,8 +48,6 @@ def input_students
   # returns the array of students
   students
 end 
-
-# #################################################
 
 # nothing happens untill we call the methods
 students = input_students
