@@ -1,12 +1,25 @@
 # #################################################
-# Refactoring
+# Saving the data to a file
 # #################################################
 
 @students = []
 
+def save_students
+   file = File.open("students.cvs", "w")
+   @students.each do |student|
+     student_data = [student[:name], student[:cohort], student[:hobby], student[:date_of_birth]]
+     csv_line = student_data.join(",")
+     file.puts csv_line
+   end
+   file.close
+ end
+
+# #################################################
+
 def print_menu
   puts "\n1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 
@@ -22,6 +35,8 @@ def process(selection)
       input_students
     when "2"
       show_students
+    when "3"
+      save_students
     when "9"
       exit # this will cause the program to terminate
     else
@@ -39,8 +54,6 @@ def interactive_menu
     process(selection)
   end
 end
-
-# #################################################
 
 # Array with list of months to check if the user input has a typo
 COHORTS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", :unknown]
