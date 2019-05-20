@@ -1,30 +1,36 @@
 # #################################################
-# Cp.14 Exercise 1
+# Cp.14 Exercise 2
 # #################################################
 
 @students = []
+
+@filename = "students.cvs"
+
+# #################################################
 
 def student_array(name, cohort, hobby, date_of_birth)
    @students << {name: name , cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
    @students
 end
 
-# #################################################
-
 def try_load_students
-  filename = ARGV.first 
-  return if filename.nil?
-  if File.exists?(filename)
-    load_students(filename)
-     puts "Loaded #{@students.count} from #{filename}"
+  if !ARGV.first.nil? 
+  @filename = ARGV.first
+    if File.exist?(@filename) # if it exists
+      load_students
+      puts "Loaded #{@students.count} from #{@filename}"
+    else # if it doesn't exist
+      puts "Sorry, #{@filename} doesn't exist"
+      exit # quit the program
+    end
   else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
+    load_students
+    puts "Loaded #{@students.count} from #{@filename}"
   end
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+def load_students
+  file = File.open(@filename, "r")
   file.readlines.each do |line|
     name, cohort, hobby, date_of_birth = line.chomp.split(",")
     student_array(name, cohort, hobby, date_of_birth)
@@ -33,7 +39,7 @@ def load_students(filename = "students.csv")
 end
 
 def save_students
-   file = File.open("students.cvs", "w")
+   file = File.open(@filename, "w")
    @students.each do |student|
      student_data = [student[:name], student[:cohort], student[:hobby], student[:date_of_birth]]
      csv_line = student_data.join(",")
