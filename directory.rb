@@ -1,5 +1,5 @@
 # #################################################
-# Cp.14 Exercise 7
+# Cp.14 Exercise 8
 # #################################################
 
 require 'csv'
@@ -7,6 +7,12 @@ require 'csv'
 @students = []
 
 @filename = "students.csv"
+
+def file_source_code
+  puts "Full path: #{__FILE__}"
+  puts "Directory name: #{File.dirname(__FILE__)}"
+  puts "File name: #{File.basename(__FILE__)}"
+end
 
 def load_file
   puts "Enter the file name"
@@ -70,6 +76,7 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.cvs"
+  puts "5. See file source code"
   puts "9. Exit"
 end
 
@@ -89,6 +96,8 @@ def process(selection)
       save_students
     when "4"
       load_file
+    when "5"
+      file_source_code
     when "9"
       exit
     else
