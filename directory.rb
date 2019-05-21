@@ -1,5 +1,5 @@
 # #################################################
-# Cp.14 Exercise 5
+# Cp.14 Exercise 6
 # #################################################
 
 @students = []
@@ -9,16 +9,14 @@
 def load_file
   puts "Enter the file name"
   @filename = gets.chomp
-  file = File.open(@filename, "r")
-  file.readlines.each do |line|
+  File.open(@filename, "r") do |file|
+    file.each do |line|
     name, cohort, hobby, date_of_birth = line.chomp.split(",")
     student_array(name, cohort, hobby, date_of_birth)
+    end
   end
-  file.close
   puts "The file has been successfully saved"
 end
-
-# #################################################
 
 def check_file_exist_and_load
   if File.exist?(@filename) # if it exists
@@ -50,24 +48,24 @@ def try_load_students
 end
 
 def load_students
-  file = File.open(@filename, "r")
-  file.readlines.each do |line|
+  File.open(@filename, "r") do |file|
+    file.each do |line|
     name, cohort, hobby, date_of_birth = line.chomp.split(",")
     student_array(name, cohort, hobby, date_of_birth)
+    end
   end
-  file.close
 end
 
 def save_students
   puts "Enter the file name"
   @filename = gets.chomp
-  file = File.open(@filename, "w")
-  @students.each do |student|
+  File.open(@filename, "w") do |file|
+    @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobby], student[:date_of_birth]]
     csv_line = student_data.join(",")
     file.puts csv_line
+    end
   end
-  file.close
   puts "The file has been successfully saved"
  end
 
