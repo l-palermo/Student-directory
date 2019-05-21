@@ -1,10 +1,24 @@
 # #################################################
-# Cp.14 Exercise 2
+# Cp.14 Exercise 3
 # #################################################
 
 @students = []
 
 @filename = "students.cvs"
+
+def check_file_exist_and_load
+  if File.exist?(@filename) # if it exists
+    load_students
+    load_confirmation_message
+  else # if it doesn't exist
+    puts "Sorry, #{@filename} doesn't exist"
+    exit # quit the program
+  end
+end
+
+def load_confirmation_message
+  puts "Loaded #{@students.count} from #{@filename}"
+end 
 
 # #################################################
 
@@ -16,16 +30,10 @@ end
 def try_load_students
   if !ARGV.first.nil? 
   @filename = ARGV.first
-    if File.exist?(@filename) # if it exists
-      load_students
-      puts "Loaded #{@students.count} from #{@filename}"
-    else # if it doesn't exist
-      puts "Sorry, #{@filename} doesn't exist"
-      exit # quit the program
-    end
+  check_file_exist_and_load
   else
     load_students
-    puts "Loaded #{@students.count} from #{@filename}"
+    load_confirmation_message
   end
 end
 
@@ -73,7 +81,7 @@ def process(selection)
     when "4"
       load_students
     when "9"
-      exit # this will cause the program to terminate
+      exit
     else
       puts "I don't know what you meant, try again"
     end
@@ -81,11 +89,8 @@ end
 
 def interactive_menu
   loop do
-    # 1. print the menu and ask the user what to do
     print_menu 
-    # 2. read the input and save it into a variable
     selection = STDIN.gets.chomp
-    # 3. do what the user has asked
     process(selection)
   end
 end
@@ -132,27 +137,27 @@ def input_students
   puts "To finish, just hit return twice"
   # get the first name
   puts "Enter the name"
-  name = STDIN.gets.delete!("\n")
+  name = STDIN.gets.chomp
   # while the name is not empty, repeate this code
   while !name.empty? do
     puts "Enter the hobby"
-    hobby = STDIN.gets.delete!("\n")
+    hobby = STDIN.gets.chomp
     puts "Enter the date of birth"
-    date_of_birth = STDIN.gets.delete!("\n")
+    date_of_birth = STDIN.gets.chomp
     puts "Enter the cohort"
-    cohort = STDIN.gets.delete!("\n")
+    cohort = STDIN.gets.chomp
     if cohort.empty?
       cohort = :unknown
     end
     while !COHORTS.include?(cohort)
       puts "You made a typo, please type again"
-      cohort = STDIN.gets.delete!("\n")
+      cohort = STDIN.gets.chomp
     end
     # add the student hash to the array
-    @students << {name: name, cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
+    student_array(name, cohort, hobby, date_of_birth)
     students_count
     # get another name from the user
-    name = STDIN.gets.delete!("\n")
+    name = STDIN.gets.chomp
   end
 end 
 
