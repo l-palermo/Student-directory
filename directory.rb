@@ -1,10 +1,24 @@
 # #################################################
-# Cp.14 Exercise 4
+# Cp.14 Exercise 5
 # #################################################
 
 @students = []
 
-@filename = "students.cvs"
+@filename = "students.csv"
+
+def load_file
+  puts "Enter the file name"
+  @filename = gets.chomp
+  file = File.open(@filename, "r")
+  file.readlines.each do |line|
+    name, cohort, hobby, date_of_birth = line.chomp.split(",")
+    student_array(name, cohort, hobby, date_of_birth)
+  end
+  file.close
+  puts "The file has been successfully saved"
+end
+
+# #################################################
 
 def check_file_exist_and_load
   if File.exist?(@filename) # if it exists
@@ -19,8 +33,6 @@ end
 def load_confirmation_message
   puts "Loaded #{@students.count} from #{@filename}"
 end 
-
-# #################################################
 
 def student_array(name, cohort, hobby, date_of_birth)
    @students << {name: name , cohort: cohort.to_sym, hobby: hobby, date_of_birth: date_of_birth}
@@ -47,13 +59,16 @@ def load_students
 end
 
 def save_students
-   file = File.open(@filename, "w")
-   @students.each do |student|
-     student_data = [student[:name], student[:cohort], student[:hobby], student[:date_of_birth]]
-     csv_line = student_data.join(",")
-     file.puts csv_line
-   end
-   file.close
+  puts "Enter the file name"
+  @filename = gets.chomp
+  file = File.open(@filename, "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort], student[:hobby], student[:date_of_birth]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+  puts "The file has been successfully saved"
  end
 
 def print_menu
@@ -78,10 +93,8 @@ def process(selection)
       show_students
     when "3"
       save_students
-      puts "The file has been successfully saved"
     when "4"
-      load_students
-      puts "The file has been successfully loaded"
+      load_file
     when "9"
       exit
     else
