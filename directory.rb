@@ -1,6 +1,8 @@
 # #################################################
-# Cp.14 Exercise 6
+# Cp.14 Exercise 7
 # #################################################
+
+require 'csv'
 
 @students = []
 
@@ -9,11 +11,9 @@
 def load_file
   puts "Enter the file name"
   @filename = gets.chomp
-  File.open(@filename, "r") do |file|
-    file.each do |line|
-    name, cohort, hobby, date_of_birth = line.chomp.split(",")
+  CSV.foreach(@filename) do |row|
+    name, cohort, hobby, date_of_birth = row
     student_array(name, cohort, hobby, date_of_birth)
-    end
   end
   puts "The file has been successfully saved"
 end
@@ -48,22 +48,18 @@ def try_load_students
 end
 
 def load_students
-  File.open(@filename, "r") do |file|
-    file.each do |line|
-    name, cohort, hobby, date_of_birth = line.chomp.split(",")
+  CSV.foreach(@filename) do |row|
+    name, cohort, hobby, date_of_birth = row
     student_array(name, cohort, hobby, date_of_birth)
-    end
   end
 end
 
 def save_students
   puts "Enter the file name"
   @filename = gets.chomp
-  File.open(@filename, "w") do |file|
+  CSV.open(@filename, "wb") do |csv|
     @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:hobby], student[:date_of_birth]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    csv << [student[:name], student[:cohort], student[:hobby], student[:date_of_birth]]
     end
   end
   puts "The file has been successfully saved"
