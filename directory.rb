@@ -1,5 +1,5 @@
 # #################################################
-# Cp.14 Exercise 3
+# Cp.14 Exercise 4
 # #################################################
 
 @students = []
@@ -78,8 +78,10 @@ def process(selection)
       show_students
     when "3"
       save_students
+      puts "The file has been successfully saved"
     when "4"
       load_students
+      puts "The file has been successfully loaded"
     when "9"
       exit
     else
